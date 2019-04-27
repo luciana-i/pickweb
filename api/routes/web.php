@@ -28,7 +28,7 @@ $router->get('photoById/{id}', ['uses' => 'PhotosController@getPhotoById', funct
 $router->post('/photos', ['uses' => 'PhotosController@createPhotos']);
 $router->patch('/photos/{id}', ['uses' => 'PhotosController@updatePhotos']);
 $router->delete('/photos/{id}', ['uses' => 'PhotosController@deletePhotos']);
-//  $router->get('/photosById', ['uses' => 'PhotosController@getPhotosByID']);
+$router->get('/photosAndCommentsByUserId/{id}', ['uses' => 'PhotosController@getPhotosAndCommentsByUserId']);
 
 $router->get('/comments', ['uses' => 'CommentsController@getComments']);
 $router->get('commentsById/{id}', ['uses' => 'CommentsController@getCommentsById', function($id=null){return $id;}]);

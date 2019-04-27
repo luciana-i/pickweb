@@ -17,8 +17,16 @@ class Comments extends Model implements AuthenticatableContract, AuthorizableCon
      *
      * @var array
      */
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+    public function photos()
+    {
+        return $this->belongsTo('App\Photos');
+    }
     protected $fillable = [
-        'description', 'id_photo','id_user','date','dest_id_usr'
+        'description', 'photo_id','user_id','date','dest_id_usr'
     ];
     public $timestamps = false;
     /**

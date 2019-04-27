@@ -30,6 +30,17 @@ class PhotosController extends Controller
             return response()->json(['Error, exit get'], 500);
         }
     }
+
+    function getPhotosAndCommentsByUserId($id){
+    
+            $userId=User::where('id', '=',$id)->first();
+            if($userId){
+                $data = App\Post::user($id)->with('photos');
+                var_dump($data);die;
+            }
+        
+    }
+    
     function createPhotos(Request $request)
     {
 
@@ -37,7 +48,7 @@ class PhotosController extends Controller
             $data = $request->json()->all();
             $photo = new Photos();
 
-            $photo->id_user = $data['id_user'];
+            $photo->id_user = $data['user_id'];
             $photo->date = $data['date'];
             if (isset($data['url_photo'])) {
                 $photo->url_photo = $data['url_photo'];

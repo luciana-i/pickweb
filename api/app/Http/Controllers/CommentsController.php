@@ -40,10 +40,10 @@ class CommentsController extends Controller
         if ($request->isJson()) {
             $data = $request->json()->all();
             $comment = new Comments();
-            $comment->id_user = $data['id_user'];
+            $comment->id_user = $data['user_id'];
             $comment->date = $data['date'];
             $comment->description = $data['description'];
-            $comment->id_photo = $data['id_photo'];
+            $comment->id_photo = $data['photo_id'];
             $comment->dest_id_usr = $data['dest_id_usr'];
             $comment->save();
             return response()->json([$comment], 201);
@@ -56,9 +56,9 @@ class CommentsController extends Controller
             try {
                 $comment = Comments::find($id);
                 if ($comment) {
-                    $comment->id_user = $request->input('id_user');
+                    $comment->id_user = $request->input('user_id');
                     $comment->description = $request->input('description');
-                    $comment->id_photo = $request->input('id_photo');
+                    $comment->id_photo = $request->input('photo_id');
                     $comment->dest_id_usr = $request->input('dest_id_usr');
                     $comment->date = $request->input('date');
                     $comment->save();

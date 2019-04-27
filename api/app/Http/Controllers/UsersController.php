@@ -21,8 +21,7 @@ class UsersController extends Controller
 
   function getUserById(Request $request, $id)
   {
-    if ($request->isJson()) {
-      $data = $request->json()->all();
+
       try {
         $user = User::where('id', '=', $id)->first();
         if ($user) {
@@ -33,9 +32,6 @@ class UsersController extends Controller
       } catch (\Illuminate\Database\QueryException $ex) {
         return response()->json("error db user not found", 500);
       }
-    } else {
-      return response()->json(['Error, exit getUserById'], 500);
-    }
   }
 
   /*

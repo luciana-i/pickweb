@@ -31,6 +31,14 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
         'password',
     ];
 
+    public function photos()
+    {
+        return $this->hasMany('App\Photos'); //make sure your images table has user_id column
+    }
+    public function comments()
+    {
+        return $this->hasMany('App\Comments'); //make sure your images table has user_id column
+    }
     public function getJWTIdentifier()
     {
         return $this->getKey();

@@ -28,13 +28,15 @@ $router->get('photoById/{id}', ['uses' => 'PhotosController@getPhotoById', funct
 $router->post('/photos', ['uses' => 'PhotosController@createPhotos']);
 $router->patch('/photos/{id}', ['uses' => 'PhotosController@updatePhotos']);
 $router->delete('/photos/{id}', ['uses' => 'PhotosController@deletePhotos']);
-$router->get('/photosAndCommentsByUserId/{id}', ['uses' => 'PhotosController@getPhotosAndCommentsByUserId']);
+$router->get('/photosByUserId/{id}', ['uses' => 'PhotosController@getPhotosByUserId']);
 
 $router->get('/comments', ['uses' => 'CommentsController@getComments']);
 $router->get('commentsById/{id}', ['uses' => 'CommentsController@getCommentsById', function($id=null){return $id;}]);
 $router->post('/comments', ['uses' => 'CommentsController@createComments']);
 $router->patch('/comments/{id}', ['uses' => 'CommentsController@updateComments']);
 $router->delete('/comments/{id}', ['uses' => 'CommentsController@deleteComments']);
+$router->get('/commentsByPhoto/{id}', ['uses' => 'CommentsController@getCommentsByPhotoId', function($id=null){return $id;}]);
+
 
 $router->post('/auth/login', 'AuthController@postLogin');
 

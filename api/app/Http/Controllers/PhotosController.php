@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Photos;
-use Illuminate\Http\Request;
+use App\User;
+use App\Http\Controllers\Response;
 use Symfony\Component\VarDumper\VarDumper;
+use DB;
 
 class PhotosController extends Controller
 {
@@ -31,12 +33,12 @@ class PhotosController extends Controller
         }
     }
 
-    function getPhotosAndCommentsByUserId($id){
-    
-            $userId=User::where('id', '=',$id)->first();
+    function getPhotosByUserId($id){
+           
+            $userId = DB::table('users')->find($id);
             if($userId){
-                $data = App\Post::user($id)->with('photos');
-                var_dump($data);die;
+              $query=DB::select("SELECT p.id, p.photo, p.date, u.name FROM `photos` p  INNER JOIN users u ON p.user_id=u.id WHERE user_id= ? ORDER BY `date` DESC", [$id]);
+              return response()->json([$query],200);
             }
         
     }
@@ -50,12 +52,9 @@ class PhotosController extends Controller
 
             $photo->id_user = $data['user_id'];
             $photo->date = $data['date'];
-            if (isset($data['url_photo'])) {
-                $photo->url_photo = $data['url_photo'];
-                echo ('entro en el url_photo');
-            } else {
-                $photo->path_photo = $data['path_photo'];
-                echo ('entro en el path_photo');
+            if (isset($data['photo'])) {
+                $photo->url_photo = $data['photo'];
+                echo ('entro en photo');
             }
             $photo->save();
             return response()->json([$photo], 201);
@@ -68,11 +67,8 @@ class PhotosController extends Controller
     {
         try {
             $photo = Photos::find($id);
-            if (!($request->input('url_photo') === null)) {
-                $photo->url_photo = $request->input('url_photo');
-            }
-            if (!($request->input('path_photo') === null)) {
-                $photo->path_photo = $request->input('path_photo');
+            if (!($request->input('photo') === null)) {
+                $photo->url_photo = $request->input('photo');
             }
             $photo->date = $request->input('date');
             $photo->save();

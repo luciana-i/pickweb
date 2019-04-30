@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Comments;
 use Illuminate\Http\Request;
 use Symfony\Component\VarDumper\VarDumper;
+use App\Models\Photos;
+use App\User;
+use App\Http\Controllers\Response;
+use DB;
 
 class CommentsController extends Controller
 {
@@ -35,6 +39,16 @@ class CommentsController extends Controller
           return response()->json(['Error, exit patch'],500);
         }      
       }
+
+      function getCommentsByPhotoId($id){
+           
+        $userId = DB::table('photos')->find($id);
+        if($userId){
+          $query=DB::select("SELECT c.id, c.description, u.name, c.date, u.photo FROM comments c INNER JOIN users u on c.user_id=u.id WHERE c.photo_id= ? ORDER BY c.date DESC", [$id]);
+          return response()->json([$query],200);
+        }
+    
+}
     function createComments(Request $request)
     {
         if ($request->isJson()) {

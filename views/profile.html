@@ -164,21 +164,23 @@
                 </div>
                 <div class="card-body">
                     <!-- Page Heading -->
-                    <p class="my-4">Foto Perfil: </p>
+                    <h5 class="my-4">Foto Perfil: </h5>
 
                     <!-- Project One -->
                     <div class="row">
                         <div class="col -md -5">
                             <div>
                                 <a href="#">
-                                    <img class="img-fluid rounded mb-3 mb-md-0" src="{{usr.photo}}" alt="">
+                                    <img class="img-fluid rounded mb-3 mb-md-0" src="{{usr.photo}}" alt="" height="232" width="232" >
                                 </a>
                             </div>
+                            <br>
+                            <h5 class="my-4">Datos del Perfil: </h5>
                             <div>
                                 <p>Nombre: {{usr.name}}</p>
                             </div>
                             <div>
-                                <p>Apellido{{usr.lastName}}</p>
+                                <p>Apellido: {{usr.lastName}}</p>
                             </div>
                             <div>
                                 <p>Mail: {{usr.mail}}</p>
@@ -187,22 +189,23 @@
 
 
 
-                        <div class="col-md-5">
+                        <div class="col-md-8">
                             <form name="form_users" enctype="multipart/form-data">
                                 <div class="form-group">
-                                    <label for="">Archivo a subir</label>
-                                    <input type="file" name="file" class="form-control-file" multiple data-ng-model="usr.photo">
+                                        <br>
+                                    <h4>Modificar foto de perfil</h4>
+                                    <br>
+                                    <input  type='file' name='file' id='file'><br />
+                                    <input type='button' value='Upload' id='upload' ng-click='upload()' >
+                                    <p>{{ response.name }}</p>
                                 </div>
                                 <div class="form-group">
-                                    <div class="barra_azul" id="barra_estado">
-                                        <span></span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <button class="btn btn-success" type="submit" value="Subir Archivo" name="submit">Subir</button>
+                                       
                                     <button class="btn btn-danger" type="button" value="Subir Archivo" id="cancelar" >Cancelar</button>
                                 </div>
+                                <br> <br>
                                 <div class="form-group">
+                                    <h4>Modificar Datos</h4>
                                     <label>Nombre: </label>
                                     <input type="text" required class="form-control" placeholder="Nombre" data-ng-model="usr.name"
                                         name="nombre">
@@ -218,7 +221,7 @@
                                         name="mail">
                                 </div>
                                 <div class="form-group">
-                                    <label>Mail: </label>
+                                    <label>Contraseña: </label>
                                     <input type="password" required class="form-control" placeholder="Contraseña"
                                         data-ng-model="usr.password" name="password">
                                 </div>

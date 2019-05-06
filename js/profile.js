@@ -1,21 +1,35 @@
 angular.module('picktimeApp',[]).controller('usersCtrl', function($scope, $http, $timeout) {
-
-    $scope.usr={name: '', lastName: '', mail: '', password: '', photo: ''};
-
-    function uploadFiles(form){
-        let barra_estado = form.children[1].children[0],
-        span = barra_estado.children[0],
-        boton_cancelar= form.children[2].children[0];
-        // peticion
-
-        let peticion = new XMLHttpRequest();
-
-        peticion.addEventListener("load", (event)=>{
-           span.innerHTML = "Archivo subido exitosamente"
-        });
-
-        // enviar datos
-
-        peticion.open('post', 'subir')
-    };
+    function initUsuario(){ ///////////COMPLETAR CON EL ID DE USUARIO
+        $http.get("../api/public/userById/"+ 4).then(function (response) {
+            var array= response.data;
+            array.forEach(element => {
+                $scope.usr=(element);   
+            });
+        })
+    }
+    $scope.upload= function (){ ///////////COMPLETAR CON EL ID DE USUARIO
+        var fd = new FormData();
+                var files = document.getElementById('file').files[0];
+                fd.append('file', files);
+                debugger
+                // AJAX request
+                $http({
+                    method: 'POST',
+                    url: "../api/public/userPhoto/" + 4,
+                    data: fd,
+                    headers: {
+                        'Content-Type': undefined
+                    },
+                }).then(function successCallback(response) {
+                    console.log(response);
+                    $scope.response = response.data;
+                  
+                }) .catch(function (response) {
+                    $timeout(function () {
+                        console.log(response)
+                    }, 0);
+                });
+                initUsuario();            
+    }
+    initUsuario();
 });

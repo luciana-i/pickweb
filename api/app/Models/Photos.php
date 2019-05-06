@@ -22,7 +22,7 @@ class Photos extends Model implements AuthenticatableContract, AuthorizableContr
         return $this->belongsTo('App\User');
     }
     protected $fillable = [
-        'url_photo', 'path_photo','user_id','date',
+       'photo','user_id','date',
     ];
     public $timestamps = false;
     /**

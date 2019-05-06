@@ -22,6 +22,8 @@ $router->get('userById/{id}', ['uses' => 'UsersController@getUserById', function
 $router->post('/user', ['uses' => 'UsersController@createUser']);
 $router->patch('/user/{id}', ['uses' => 'UsersController@updateUser']);
 $router->delete('/user/{id}', ['uses' => 'UsersController@deleteUser']);
+$router->post('/userPhoto/{id}', ['uses' => 'UsersController@postPhoto']);
+
 
 $router->get('/photos', ['uses' => 'PhotosController@getPhotos']);
 $router->get('photoById/{id}', ['uses' => 'PhotosController@getPhotoById', function($id=null){return $id;}]);

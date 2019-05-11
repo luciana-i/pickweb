@@ -1,4 +1,5 @@
 angular.module('picktimeApp',[]).controller('usersCtrl', function($scope, $http, $timeout) {
+    $scope.esVisible=false;
     function initUsuario(){ ///////////COMPLETAR CON EL ID DE USUARIO
         $http.get("../api/public/userById/"+ 4).then(function (response) {
             var array= response.data;
@@ -6,6 +7,9 @@ angular.module('picktimeApp',[]).controller('usersCtrl', function($scope, $http,
                 $scope.usr=(element);   
             });
         })
+    }
+    $scope.MostrarFoto= function(){
+        $scope.esVisible= !$scope.esVisible;
     }
     $scope.upload= function (){ ///////////COMPLETAR CON EL ID DE USUARIO
         var fd = new FormData();

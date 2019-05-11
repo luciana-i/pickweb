@@ -171,7 +171,8 @@
                         <div class="col -md -5">
                             <div>
                                 <a href="#">
-                                    <img class="img-fluid rounded mb-3 mb-md-0" src="{{usr.photo}}" alt="" height="232" width="232" >
+                                    <img class="img-fluid rounded mb-3 mb-md-0" src="{{usr.photo}}" alt="" height="232"
+                                        width="232">
                                 </a>
                             </div>
                             <br>
@@ -191,24 +192,23 @@
 
                         <div class="col-md-8">
                             <form name="form_users" enctype="multipart/form-data">
-                                <div class="form-group">
+                                <input type="button" value="Subir foto de perfil" ng-click="MostrarFoto()" />
+                                    <div class="form-group" ng-show="esVisible">
+                                        <!-- <h8>Modificar foto de perfil</h8> -->
                                         <br>
-                                    <h4>Modificar foto de perfil</h4>
-                                    <br>
-                                    <input  type='file' name='file' id='file'><br />
-                                    <input type='button' value='Upload' id='upload' ng-click='upload()' >
-                                    <p>{{ response.name }}</p>
-                                </div>
+                                        <input type='file' name='file' id='file'><br />
+                                        <input type='button' value='Upload' id='upload' ng-click='upload()'>
+                                        <p>{{ response.name }}</p>
+                                    </div>
+                                
                                 <div class="form-group">
-                                       
-                                    <button class="btn btn-danger" type="button" value="Subir Archivo" id="cancelar" >Cancelar</button>
                                 </div>
-                                <br> <br>
+                                <br> 
                                 <div class="form-group">
                                     <h4>Modificar Datos</h4>
                                     <label>Nombre: </label>
-                                    <input type="text" required class="form-control" placeholder="Nombre" data-ng-model="usr.name"
-                                        name="nombre">
+                                    <input type="text" required class="form-control" placeholder="Nombre"
+                                        data-ng-model="usr.name" name="nombre">
                                 </div>
                                 <div class="form-group">
                                     <label>Apellido: </label>
@@ -217,16 +217,18 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Mail: </label>
-                                    <input type="email" required class="form-control" placeholder="Mail" data-ng-model="usr.mail"
-                                        name="mail">
+                                    <input type="email" required class="form-control" placeholder="Mail"
+                                        data-ng-model="usr.mail" name="mail">
                                 </div>
                                 <div class="form-group">
                                     <label>Contraseña: </label>
                                     <input type="password" required class="form-control" placeholder="Contraseña"
                                         data-ng-model="usr.password" name="password">
                                 </div>
-                                <button type="button" class="btn btn-success" data-ng-click="guardarUsuarioEditado()">Guardar</button>
-                                <button type="button" class="btn btn-default" data-ng-click="cancelarUsuarioEditado()">Cancelar</button>
+                                <button type="button" class="btn btn-success"
+                                    data-ng-click="guardarUsuarioEditado()">Guardar</button>
+                                <button type="button" class="btn btn-default"
+                                    data-ng-click="cancelarUsuarioEditado()">Cancelar</button>
                             </form>
                         </div>
                     </div>

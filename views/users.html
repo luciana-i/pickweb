@@ -163,6 +163,7 @@
                                     <th>Apellido</th>
                                     <th>Mail</th>
                                     <th>Rol</th>
+                                    <th>Imagen</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
@@ -172,6 +173,8 @@
                                             <td>{{ x.lastName}}</td>
                                             <td>{{ x.mail }}</td>
                                             <td>{{ x.rol }}</td>
+                                            <td ><img class="img-fluid rounded mb-3 mb-md-0" src="{{ x.photo }}" alt="" height="50"
+                                                width="50"></td>
                                             <td><button type="button" class="btn btn-primary" data-ng-click="editarUsuario(x)" ><i class="far fa-edit"></i></button>
                                                 <button type="button" class="btn btn-primary" data-ng-click="eliminarUsuario(x.id)"><i class="far fa-trash-alt"></i></i></button> </td>
                                           </tr>

@@ -154,53 +154,67 @@
         </ul>
 
         <div class="container" ng-app="picktimeApp" ng-controller="wallCtrl">
-
-            <div class="row" ng-repeat="foto in fotoConComentarios">
-
-                <!-- Post Content Column -->
+            <br>
+            <div class="row">
                 <div class="col-lg-8">
+                    <h8><i>Agregar una foto: </i></h8>
+                    <div class="card-body">
+                        <form>
+                            <div class="form-group">
+                                <input type='file' name='file' id='file'><br />
+                                <input type='button' value='Upload' id='upload' ng-click='upload()'>
+                            </div>
 
-                    <!-- Title -->
-                    <h1 class="mt-4">Post Title</h1>
-
-
-                    <!-- -- Author-- Date/Time -->
-                    <p>
-                        <a>{{foto.name}}</a>
-                        <p style="text-align:right;">{{foto.date}}</p>
-                    </p>
-
-
-                    <hr>
-
-                    <!-- Preview Image -->
-                    <img class="img-fluid rounded" src="{{foto.photo}}" alt="">
-
-                    <hr>
-
-
-                    <!-- Comments Form -->
-                    <div class="card my-4">
-                        <h5 class="card-header">Deja tu comentario: </h5>
-                        <div class="card-body">
-                            <form>
-                                <div class="form-group">
-                                    <textarea class="form-control" rows="3"></textarea>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </form>
-                        </div>
+                        </form>
                     </div>
 
-                    <!-- Single Comment -->
-                    <div class="media mb-4" ng-repeat="comentario in foto.comentarios">
-                        <img class="d-flex mr-3 rounded-circle" height="42" width="42" src="{{comentario.photo}}" alt="">
-                        <div class="media-body">
-                            <h5 class="mt-0">{{comentario.name}}</h5>
-                            {{comentario.description}}
-                        </div>
-                    </div>
+                </div>
 
+
+                <div ng-repeat="foto in fotoConComentarios">
+
+                    <!-- Post Content Column -->
+                    <div class="col-lg-8">
+
+                        <!-- -- Author-- Date/Time -->
+                        <p>
+                            <a>{{foto.name}}</a>
+                            <p style="text-align:right;">{{foto.date}}</p>
+                        </p>
+
+
+                        <hr>
+
+                        <!-- Preview Image -->
+                        <img class="img-fluid rounded" src="{{foto.photo}}" alt="">
+
+                        <hr>
+
+
+                        <!-- Comments Form -->
+                        <div class="card my-4">
+                            <h5 class="card-header">Deja tu comentario: </h5>
+                            <div class="card-body">
+                                <form>
+                                    <div class="form-group">
+                                        <textarea class="form-control" rows="3"></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Single Comment -->
+                        <div class="media mb-4" ng-repeat="comentario in foto.comentarios">
+                            <img class="d-flex mr-3 rounded-circle" height="42" width="42" src="{{comentario.photo}}"
+                                alt="">
+                            <div class="media-body">
+                                <h5 class="mt-0">{{comentario.name}}</h5>
+                                {{comentario.description}}
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>

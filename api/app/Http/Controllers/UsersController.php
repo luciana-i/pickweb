@@ -161,7 +161,7 @@ class UsersController extends Controller
     echo json_encode($arr);
 
     $query =  DB::update('update users set photo = ? where id = ?', [$pathBD.$filename, $id]);
-
+    $echo($query);  
       
     if ($query) {
       return response()->json("patch OK", 200);

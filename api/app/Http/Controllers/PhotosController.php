@@ -45,7 +45,7 @@ class PhotosController extends Controller
         }
     }
 
-    function createPhotos(Request $request)
+    function createPhotos($id)
     {
         /*
         if ($request->isJson()) {
@@ -66,8 +66,6 @@ class PhotosController extends Controller
 */
 
         try {
-            $data = $request->json()->all();
-            
         
             $filename =$_FILES['file']['name'];
 
@@ -79,14 +77,9 @@ class PhotosController extends Controller
             move_uploaded_file($_FILES['file']['tmp_name'], $location . $filename);
 
             $pathBD = "./../api/storage/resources/";
-
             $arr = array("name" => $filename);
             echo json_encode($arr);
-
-            var_dump($filename);die;
-            $data = $request->json()->all();
-            var_dump($request->json()->all());die;
-            $id = $data['user_id'];
+            
             $date = date("Y-m-d");
 
             $query =  DB::insert('insert into photos (photo, user_id, date)  values (?,?,?)', [$pathBD . $filename, $id, $date]);
@@ -95,9 +88,9 @@ class PhotosController extends Controller
             die;
 
             if ($query)
-                return response()->json("patch OK", 200);
+                return response()->json("post OK", 200);
         } catch (\Illuminate\Database\QueryException $ex) {
-            return response()->json("patch no OK", 500);
+            return response()->json("post no OK", 500);
         }
     }
 

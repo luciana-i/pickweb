@@ -176,13 +176,16 @@
                     <!-- Post Content Column -->
                     <div class="col-lg-8">
 
-                        <!-- -- Author-- Date/Time -->
-                        <p>
-                            <a>{{foto.name}}</a>
-                            <p style="text-align:right;">{{foto.date}}</p>
-                        </p>
-
-
+                        <!-- -- Author-- Date/Time-->
+                        <div>
+                            <a>{{foto.name}}
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;{{foto.date}}</a>
+                        </div>
                         <hr>
 
                         <!-- Preview Image -->
@@ -199,7 +202,7 @@
                                     <div class="form-group">
                                         <textarea class="form-control" rows="3"></textarea>
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button type="button" class="btn btn-primary" data-ng-click="crearComentario(foto.id)" >Insertar Comentario</button>
                                 </form>
                             </div>
                         </div>
@@ -213,7 +216,7 @@
                                 {{comentario.description}}
                             </div>
                         </div>
-
+                        <br>
                     </div>
                 </div>
             </div>

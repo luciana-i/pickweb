@@ -7,7 +7,6 @@ app.controller('usersCtrl', function($scope, $http, $timeout) {
                 $scope.users=(element);   
             });
         })
-       
     }
 
     $scope.eliminarUsuario = function (user) {
@@ -39,7 +38,6 @@ app.controller('usersCtrl', function($scope, $http, $timeout) {
                     initUsuarios();
                     $scope.cancelarUsuarioEditado();
                 }, 0);
-
             })
             .catch(function () {
                 $timeout(function () {
@@ -48,7 +46,7 @@ app.controller('usersCtrl', function($scope, $http, $timeout) {
             });
         }
 
-    $scope.cancelarUsuarioEditado = function () {
+        $scope.cancelarUsuarioEditado = function () {
         $scope.nuevoUsuario = {
             nombre: '',
             mail: '',

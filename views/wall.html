@@ -153,7 +153,7 @@
             </li>
         </ul>
 
-        <div class="container" ng-app="picktimeApp" ng-controller="wallCtrl">
+        <div class="container" ng-app="picktimeApp" ng-controller="wallCtrl as $ctrl">
             <br>
             <div class="row">
                 <div class="col-lg-8">
@@ -200,20 +200,40 @@
                             <div class="card-body">
                                 <form>
                                     <div class="form-group">
-                                        <textarea class="form-control" rows="3"></textarea>
+                                        <textarea class="form-control" rows="3" data-ng-model="foto.descripcion"></textarea>
                                     </div>
-                                    <button type="button" class="btn btn-primary" data-ng-click="crearComentario(foto.id)" >Insertar Comentario</button>
+                                    <button type="button" class="btn btn-primary"
+                                        data-ng-click="crearComentario(foto.id,$index)">Insertar
+                                        Comentario</button> &nbsp;&nbsp;&nbsp;
+                                        <button type="button" class="btn btn-danger"
+                                        data-ng-click="cancelarComentario
+                                        ($index)">Cancelar comentario</button>
                                 </form>
                             </div>
                         </div>
 
                         <!-- Single Comment -->
-                        <div class="media mb-4" ng-repeat="comentario in foto.comentarios">
+                        <div class="media mb-4" ng-repeat="comentario in foto.comentarios | orderBy: '-date'">
                             <img class="d-flex mr-3 rounded-circle" height="42" width="42" src="{{comentario.photo}}"
                                 alt="">
                             <div class="media-body">
                                 <h5 class="mt-0">{{comentario.name}}</h5>
                                 {{comentario.description}}
+
+                                <button type="button" class="btn btn-primary" ng-click="editarUsuario()"
+                                    ng-model="showStartEvent" class="far fa-edit"><i class="far fa-edit"></i></button>
+                                <div class="form-group" ng-show="showStartEvent">
+                                    <textarea class="form-control" rows="3"
+                                       ng-model="comentario.descripcionEditada" ></textarea>
+                                    <button type="button" class="btn btn-success"
+                                        data-ng-click="guardarDescripcionEditada($parent.$index,$index,comentario.id)"><i
+                                            class="far fa-save"></i></button>
+                                    <button type="button" class="btn btn-danger"
+                                        data-ng-click="cancelarDescripcionEditada($parent.$index,$index)"><i class="fas fa-ban"></i></button>
+                                </div>
+                                <button type="button" class="btn btn-primary"
+                                    data-ng-click="eliminarComentario(comentario.id)"><i
+                                        class="far fa-trash-alt"></i></i></button>
                             </div>
                         </div>
                         <br>

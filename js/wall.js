@@ -1,8 +1,10 @@
 var app = angular.module('picktimeApp', []);
 var fotosYComentarios = [];
-var comentarios;
+
 app.controller('wallCtrl', function ($scope, $http, $timeout) {
-   
+  $scope.showStartEvent=false;
+ 
+ 
    var initFotos = function () { ///////////////MODIFICAR POR EL USUARIO QUE ESTA UTILIZANDO
       $http.get("../api/public/photosByUserId/" + 4).then(function (response) {
          var array = response.data;
@@ -42,9 +44,7 @@ app.controller('wallCtrl', function ($scope, $http, $timeout) {
          data: fd,
       }).then(function successCallback(response) {
          console.log(response);
-         debugger
          $scope.response = response.data;
-
       }).catch(function (response) {
          $timeout(function () {
             console.log(response)
@@ -52,28 +52,73 @@ app.controller('wallCtrl', function ($scope, $http, $timeout) {
       });
    }
 
-   $scope.crearComentario=function(photoId){
-      debugger;
-      var nuevoComentario;
-      for(let index = 0; index < fotosYComentarios.length; index++){
-        if(fotosYComentarios[index].id==photoId){
-         nuevoComentario=fotosYComentarios[index];
-        }
-      }
-      $http.post('../api/public/comentarioByPhotoid/' + photoId, nuevoComentario)
+   $scope.crearComentario=function(id,index){
+      nuevoComentario= {};
+      nuevoComentario.description=$scope.fotoConComentarios[index].descripcion;
+      nuevoComentario.photo_id=id;
+      //////////////////REEMPLAZAR USUARIO!!!!
+      $http.post('../api/public/comentarioByPhotoid/' + 4, nuevoComentario)
       .then(function (response) {
           $timeout(function () {
-              initUsuarios();
-             // $scope.cancelarUsuarioEditado();
+            initFotos();
           }, 0);
       })
-      .catch(function () {
+      .catch(function (response) {
+         console.log(response)
           $timeout(function () {
               alert('Error guardando comentario');
           }, 0);
       });
-      
    }
 
-   initFotos();
+   $scope.cancelarComentario = function(id){
+      $scope.fotoConComentarios[id].descripcion=""
+   }
+
+   $scope.editarUsuario= function(){
+      $scope.showStartEvent= !$scope.showStartEvent;
+  }
+
+   $scope.guardarDescripcionEditada=function(fotoID,comentID, id){
+      comentario={}
+      var date = (new Date()).toISOString().split('T')[0];
+      console.log(date)
+      comentario.description=$scope.fotoConComentarios[fotoID].comentarios[comentID].descripcionEditada;
+      comentario.date=date;
+      console.log(comentario)
+      $http.patch('../api/public/comments/'+ id, comentario)
+      .then(function (response) {
+         console.log(response)
+          $timeout(function () {
+            initFotos();
+          }, 0);
+      })
+      .catch(function (response) {
+         console.log(response)
+          $timeout(function () {
+              alert('Error guardando comentario');
+          }, 0);
+      });
+   }
+   $scope.cancelarDescripcionEditada= function (fotoId, comentarioID){
+     $scope.fotoConComentarios[fotoId].comentarios[comentarioID].descripcionEditada=""
+   }
+
+
+   $scope.eliminarComentario = function (id){
+      $http.delete('../api/public/comments/'+ id)
+      .then(function (response) {
+         console.log(response)
+          $timeout(function () {
+            initFotos();
+          }, 0);
+      })
+      .catch(function (response) {
+         console.log(response)
+          $timeout(function () {
+              alert('Error eliminando comentario');
+          }, 0);
+      });
+   }
+   initFotos();    
 });

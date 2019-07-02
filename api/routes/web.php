@@ -34,7 +34,7 @@ $router->get('/photosByUserId/{id}', ['uses' => 'PhotosController@getPhotosByUse
 
 $router->get('/comments', ['uses' => 'CommentsController@getComments']);
 $router->get('commentsById/{id}', ['uses' => 'CommentsController@getCommentsById', function($id=null){return $id;}]);
-$router->post('/comments', ['uses' => 'CommentsController@createComments']);
+$router->post('/comentarioByPhotoid/{id}', ['uses' => 'CommentsController@createCommentsByPhotoId', function($id=null){return $id;}]);
 $router->patch('/comments/{id}', ['uses' => 'CommentsController@updateComments']);
 $router->delete('/comments/{id}', ['uses' => 'CommentsController@deleteComments']);
 $router->get('/commentsByPhoto/{id}', ['uses' => 'CommentsController@getCommentsByPhotoId', function($id=null){return $id;}]);

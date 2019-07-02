@@ -41,7 +41,6 @@ class CommentsController extends Controller
       }
 
       function getCommentsByPhotoId($id){
-           
         $userId = DB::table('photos')->find($id);
         if($userId){
           $query=DB::select("SELECT c.id, c.description, u.name, c.date, u.photo FROM comments c INNER JOIN users u on c.user_id=u.id WHERE c.photo_id= ? ORDER BY c.date DESC", [$id]);
@@ -49,13 +48,20 @@ class CommentsController extends Controller
         }
     }
     function createCommentsByPhotoId(Request $request, $id){
-           
-      $userId = DB::table('photos')->find($id);
-      if($userId){
-        $query=DB::select("SELECT c.id, c.description, u.name, c.date, u.photo FROM comments c INNER JOIN users u on c.user_id=u.id WHERE c.photo_id= ? ORDER BY c.date DESC", [$id]);
-        return response()->json([$query],200);
-      }
-  }
+      if ($request->isJson()) {
+        $data = $request->json()->all();
+       // var_dump($data);die;
+        $descripcion=$data['description'];
+        $photo_id=$data['photo_id'];
+        $fecha=date("Y-m-d");
+        $id+0;
+        $query =  DB::insert('insert into comments (photo_id, description, date,user_id)  values (?,?,?,?)', [$photo_id, $descripcion,$fecha, $id]);
+       
+        return response()->json([$query], 201);
+    } else {
+        return response()->json(['Error, exit post'], 500);
+    }
+    }/*
     function createComments(Request $request)
     {
         if ($request->isJson()) {
@@ -71,16 +77,13 @@ class CommentsController extends Controller
         } else {
             return response()->json(['Error, exit post'], 500);
         }
-    }
+    }*/
     function updateComments(Request $request,$id)
     {
             try {
                 $comment = Comments::find($id);
                 if ($comment) {
-                    $comment->id_user = $request->input('user_id');
                     $comment->description = $request->input('description');
-                    $comment->id_photo = $request->input('photo_id');
-                    $comment->dest_id_usr = $request->input('dest_id_usr');
                     $comment->date = $request->input('date');
                     $comment->save();
 

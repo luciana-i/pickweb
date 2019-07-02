@@ -83,10 +83,6 @@ class PhotosController extends Controller
             $date = date("Y-m-d");
 
             $query =  DB::insert('insert into photos (photo, user_id, date)  values (?,?,?)', [$pathBD . $filename, $id, $date]);
-            var_dump($id, $date, $pathBD . $filename);
-            var_dump($query);
-            die;
-
             if ($query)
                 return response()->json("post OK", 200);
         } catch (\Illuminate\Database\QueryException $ex) {

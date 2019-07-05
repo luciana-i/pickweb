@@ -162,7 +162,7 @@
                         <form>
                             <div class="form-group">
                                 <input type='file' name='file' id='file'><br />
-                                <input type='button' value='Upload' id='upload' ng-click='upload()'>
+                                <input type='button' value='Subir Foto' id='upload' ng-click='uploadFoto()'>
                             </div>
 
                         </form>
@@ -170,28 +170,56 @@
 
                 </div>
 
+                <!-- Repeat de los posts con sus comentarios -->
 
                 <div ng-repeat="foto in fotoConComentarios">
 
                     <!-- Post Content Column -->
-                    <div class="col-lg-8">
+
+                    <div class="col-lg-8" style="border: 1px solid black">
 
                         <!-- -- Author-- Date/Time-->
                         <div>
-                            <a>{{foto.name}}
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                &nbsp;&nbsp;{{foto.date}}</a>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <span>{{foto.name}}</span>
+                                </div>
+
+                                <div class="col-lg-6 text-right">
+                                    <span>{{foto.date}}</span>
+                                </div>
+                            </div>
+
+                            <!-- <button type="button" class="btn btn-primary" data-ng-click="editarFoto(foto.id,$index)"><i
+                                    class="far fa-edit"></button> &nbsp;&nbsp;&nbsp;-->
+
+                            <button class="btn btn-info" type="button"><i class="far fa-trash-alt" ng-click="eliminarFoto($index)"></i></button>
+                            <button class="btn btn-info" type="button" ng-click="editarFoto($index)"><i class="far fa-edit"></i></button>
+                            <div class="form-group" ng-show="selected == $index">
+                                <form>
+                                    <div class="form-group">
+                                        <input type='file' name='file' id='file{{$index}}'><br />
+                                        <input type='button' value='Editar Foto' id='upload'
+                                            ng-click='editFoto($index)'>
+                                    </div>
+
+                                </form>
+
+                                <button type="button" class="btn btn-danger"
+                                    data-ng-click="cancelarDescripcionEditada($parent.$index,$index)"><i
+                                        class="fas fa-ban"></i></button>
+                            </div>
+
                         </div>
                         <hr>
 
-                        <!-- Preview Image -->
+                        <!-- Preview Image     -->
+
+
                         <img class="img-fluid rounded" src="{{foto.photo}}" alt="">
 
                         <hr>
+
 
 
                         <!-- Comments Form -->
@@ -200,13 +228,13 @@
                             <div class="card-body">
                                 <form>
                                     <div class="form-group">
-                                        <textarea class="form-control" rows="3" data-ng-model="foto.descripcion"></textarea>
+                                        <textarea class="form-control" rows="3"
+                                            data-ng-model="foto.descripcion"></textarea>
                                     </div>
                                     <button type="button" class="btn btn-primary"
                                         data-ng-click="crearComentario(foto.id,$index)">Insertar
                                         Comentario</button> &nbsp;&nbsp;&nbsp;
-                                        <button type="button" class="btn btn-danger"
-                                        data-ng-click="cancelarComentario
+                                    <button type="button" class="btn btn-danger" data-ng-click="cancelarComentario
                                         ($index)">Cancelar comentario</button>
                                 </form>
                             </div>
@@ -220,20 +248,20 @@
                                 <h5 class="mt-0">{{comentario.name}}</h5>
                                 {{comentario.description}}
 
-                                <button type="button" class="btn btn-primary" ng-click="editarUsuario()"
-                                    ng-model="showStartEvent" class="far fa-edit"><i class="far fa-edit"></i></button>
-                                <div class="form-group" ng-show="showStartEvent">
+                                <button type="button" class="btn btn-outline-info btn-sm"
+                                    data-ng-click="eliminarComentario(comentario.id)"><i
+                                        class="far fa-trash-alt"></i></i></button>
+                                <button type="button" class="btn btn-outline-info btn-sm" ng-click="editarUsuario($index)"><i class="far fa-edit"></i></button>
+                                <div class="form-group" ng-show="selectedIndex == $index">
                                     <textarea class="form-control" rows="3"
-                                       ng-model="comentario.descripcionEditada" ></textarea>
+                                        ng-model="comentario.descripcionEditada"></textarea>
                                     <button type="button" class="btn btn-success"
                                         data-ng-click="guardarDescripcionEditada($parent.$index,$index,comentario.id)"><i
                                             class="far fa-save"></i></button>
                                     <button type="button" class="btn btn-danger"
-                                        data-ng-click="cancelarDescripcionEditada($parent.$index,$index)"><i class="fas fa-ban"></i></button>
+                                        data-ng-click="cancelarDescripcionEditada($parent.$index,$index)"><i
+                                            class="fas fa-ban"></i></button>
                                 </div>
-                                <button type="button" class="btn btn-primary"
-                                    data-ng-click="eliminarComentario(comentario.id)"><i
-                                        class="far fa-trash-alt"></i></i></button>
                             </div>
                         </div>
                         <br>

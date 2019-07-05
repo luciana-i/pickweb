@@ -30,7 +30,8 @@ class PhotosController extends Controller
         if ($request->isJson()) {
             return response()->json([Photos::all()], 200);
         } else {
-           print_r($request);die;
+            print_r($request);
+            die;
             return response()->json(['Error, exit get'], 500);
         }
     }
@@ -47,27 +48,9 @@ class PhotosController extends Controller
 
     function createPhotos($id)
     {
-        /*
-        if ($request->isJson()) {
-            $data = $request->json()->all();
-            $photo = new Photos();
-
-            $photo->id_user = $data['user_id'];
-            $photo->date = $data['date'];
-            if (isset($data['photo'])) {
-                $photo->url_photo = $data['photo'];
-                echo ('entro en photo');
-            }
-            $photo->save();
-            return response()->json([$photo], 201);
-        } else {
-            return response()->json(['Error, exit post'], 500);
-        }
-*/
-
         try {
-        
-            $filename =$_FILES['file']['name'];
+
+            $filename = $_FILES['file']['name'];
 
             /* Location */
 
@@ -79,7 +62,7 @@ class PhotosController extends Controller
             $pathBD = "./../api/storage/resources/";
             $arr = array("name" => $filename);
             echo json_encode($arr);
-            
+
             $date = date("Y-m-d");
 
             $query =  DB::insert('insert into photos (photo, user_id, date)  values (?,?,?)', [$pathBD . $filename, $id, $date]);
@@ -90,19 +73,38 @@ class PhotosController extends Controller
         }
     }
 
-    function updatePhotos(Request $request, $id)
+    function updatePhotos($id)
     {
-        try {
-            $photo = Photos::find($id);
-            if (!($request->input('photo') === null)) {
-                $photo->url_photo = $request->input('photo');
+        if (Photos::find($id)) {
+           
+            $filename = $_FILES['file']['name'];
+
+            /* Location */
+
+            $location = "../storage/resources/";
+
+            /* Upload file */
+            move_uploaded_file($_FILES['file']['tmp_name'], $location . $filename);
+
+            $pathBD = "./../api/storage/resources/";
+
+            $arr = array("name" => $filename);
+            echo json_encode($arr);
+
+            $date = date("Y-m-d");
+
+            $query =  DB::update('update photos set photo = ?, date= ? where id = ?', [$pathBD . $filename, $date, $id]);
+
+
+            if ($query) {
+                return response()->json("patch OK", 200);
+            } else {
+                return response()->json("error patch", 500);
             }
-            $photo->date = $request->input('date');
-            $photo->save();
-            return response()->json([$photo], 201);
-        } catch (\Illuminate\Database\QueryException $ex) {
+        } else {
             return response()->json("error db photo not found", 500);
         }
+        
     }
 
     function deletePhotos(Request $request, $id)

@@ -1,11 +1,14 @@
 angular.module('miApp', [ 'ui.router', 'satellizer'])
 
-.controller('wallCtrl', function ($scope, $http, $timeout, $auth) {
+.controller('wallCtrl', function ($scope, $http, $timeout, $auth,$state) {
 	var fotosYComentarios = [];
 	$scope.showStartEvent = false;
 	$scope.showPhotoEvent = false;
- 
- 
+ /*
+	$scope.rs_logout() = function(){
+		$state.go('login')
+	}
+ */
 	var initFotos = function () { 
 	   $http.get("./api/public/photosByUserId/" + $auth.getPayload().sub).then(function (response) {
 		  var array = response.data;
@@ -163,7 +166,6 @@ angular.module('miApp', [ 'ui.router', 'satellizer'])
  
 	$scope.eliminarFoto = function (index) {
 	   $scope.fotoConComentarios[index].id
-	   debugger
 	   $http.delete('./api/public/photos/' + $scope.fotoConComentarios[index].id)
 		  .then(function (response) {
 			 console.log(response)
@@ -181,7 +183,7 @@ angular.module('miApp', [ 'ui.router', 'satellizer'])
 	initFotos();
  })
 
- .controller('profileCtrl', function($scope, $http, $timeout, $auth) {
+.controller('profileCtrl', function($scope, $http, $timeout, $auth) {
     $scope.esVisible=false;
     function initUsuario(){ 
         $http.get("./api/public/userById/"+ $auth.getPayload().sub).then(function (response) {
@@ -198,7 +200,6 @@ angular.module('miApp', [ 'ui.router', 'satellizer'])
         var fd = new FormData();
                 var files = document.getElementById('file').files[0];
                 fd.append('file', files);
-                debugger
                 // AJAX request
                 $http({
                     method: 'POST',
@@ -221,7 +222,7 @@ angular.module('miApp', [ 'ui.router', 'satellizer'])
     initUsuario();
 })
 
-.controller('findFriendsCtrl', function($scope, $http, $window) {    
+.controller('findFriendsCtrl', function($scope, $http, $window, $timeout, $state) {    
 	$http.get("./api/public/user").then(function (response) {
 		var array= response.data;
 		array.forEach(element => {
@@ -231,7 +232,7 @@ angular.module('miApp', [ 'ui.router', 'satellizer'])
 	$scope.goToWall= function(id){
 		var userID=undefined;
 		$window.localStorage.setItem(userID,id)
-		$window.location.href='../views/userWall.html';
+		$state.go('userWall')
 	}
 })
 
@@ -246,7 +247,6 @@ angular.module('miApp', [ 'ui.router', 'satellizer'])
 }
 
 $scope.eliminarUsuario = function (user) {
-   // debugger
 	$http.delete('./api/public/user/' +user)
 		.then(function (response) {
 			$timeout(function () {
@@ -303,7 +303,7 @@ initUsuarios();
 	};
 	
 	$scope.register = function () {
-		$http.post('./api/public/user', $scope.nuevoUsuario)
+		/*$http.post('./api/public/user', $scope.nuevoUsuario)
 			.then(function (response) {
 				$timeout(function () {
 					console.log(response.data)
@@ -321,10 +321,197 @@ initUsuarios();
 					//$scope.cancelarUsuarioNuevo();
 					alert('Error guardando nuevo usuario');
 				}, 0);
-			});
-
+				});
+*/
 	};
 })
+
+.controller('usersWallCtrl', function($scope, $http, $window, $auth, $timeout) {
+    var userID;
+	var userId=$window.localStorage.getItem(userID);
+	$scope.id=$auth.getPayload().sub;
+	
+	var fotosYComentarios = [];
+	$scope.showStartEvent = false;
+	$scope.showPhotoEvent = false;
+ 
+ 
+	var initFotos = function () { 
+	   $http.get("./api/public/photosByUserId/" + userId).then(function (response) {
+		  var array = response.data;
+		  array.forEach(element => {
+			 fotosYComentarios = element
+			 for (let index = 0; index < fotosYComentarios.length; index++) {
+				$http.get("./api/public/commentsByPhoto/" + fotosYComentarios[index].id).then(function (res) {
+				   var arrayComentarios = res.data;
+				   arrayComentarios.forEach(comentario => {
+					  if (comentario.length > 0)
+						 fotosYComentarios[index]['comentarios'] = (comentario)
+				   })
+				})
+			 }
+			 $scope.fotoConComentarios = (fotosYComentarios)
+		  })
+	
+	   })
+ 
+	}
+	initFotos();
+	$scope.uploadFoto = function () {
+	   var id = 4; /////LLENAR ID CON ID USUARIO
+	   var fd = new FormData();
+	   var files = document.getElementById('file').files[0];
+	   fd.append('file', files);
+	   suboFoto(fd);
+	   initFotos();
+	}
+ 
+	function suboFoto(fd) {
+	   $http({
+		  headers: {
+			 'Content-Type': undefined
+		  },
+		  method: 'POST',
+		  url: "./api/public/photos/" + userId,
+		  data: fd,
+	   }).then(function successCallback(response) {
+		  console.log(response);
+		  $scope.response = response.data;
+	   }).catch(function (response) {
+		  $timeout(function () {
+			 console.log(response)
+		  }, 0);
+	   });
+	}
+ 
+	$scope.editFoto = function (id) {
+	   var fd = new FormData();
+	   var files = document.getElementById('file' + id).files[0];
+	   fd.append('file', files);
+	   editoFoto(fd, $scope.fotoConComentarios[id].id);
+	   initFotos();
+	}
+ 
+	function editoFoto(fd, id) {
+	   $http({
+		  headers: {
+			 'Content-Type': undefined
+		  },
+		  method: 'POST',
+		  url: "./api/public/editPhotos/" + id,
+		  data: fd,
+	   }).then(function successCallback(response) {
+		  console.log(response);
+		  $scope.response = response.data;
+	   }).catch(function (response) {
+		  $timeout(function () {
+			 console.log(response)
+		  }, 0);
+	   });
+	}
+ 
+	$scope.crearComentario = function (id, index) {
+	   nuevoComentario = {};
+	   nuevoComentario.description = $scope.fotoConComentarios[index].descripcion;
+	   nuevoComentario.photo_id = id;
+	   $http.post('./api/public/comentarioByPhotoid/' + userId, nuevoComentario)
+		  .then(function (response) {
+			 $timeout(function () {
+				initFotos();
+			 }, 0);
+		  })
+		  .catch(function (response) {
+			 console.log(response)
+			 $timeout(function () {
+				alert('Error guardando comentario');
+			 }, 0);
+		  });
+	}
+ 
+	$scope.cancelarComentario = function (id) {
+	   $scope.fotoConComentarios[id].descripcion = ""
+	}
+ 
+	$scope.editarUsuario = function (index) {
+		 
+	   if ($scope.selectedIndex == index) {
+		  $scope.selectedIndex = null;
+	   } else {
+		  $scope.selectedIndex = index;
+	   }
+	}
+ 
+	$scope.editarFoto = function (index) {
+	   if ($scope.selected == index) {
+		  $scope.selected = null;
+	   } else {
+		  $scope.selected = index;
+	   }
+	}
+
+	$scope.guardarDescripcionEditada = function (fotoID, comentID, id) {
+	   comentario = {}
+	   var date = (new Date()).toISOString().split('T')[0];
+	   console.log(date)
+	   comentario.description = $scope.fotoConComentarios[fotoID].comentarios[comentID].descripcionEditada;
+	   comentario.date = date;
+	   console.log(comentario)
+	   $http.patch('./api/public/comments/' + id, comentario)
+		  .then(function (response) {
+			 console.log(response)
+			 $timeout(function () {
+				initFotos();
+			 }, 0);
+		  })
+		  .catch(function (response) {
+			 console.log(response)
+			 $timeout(function () {
+				alert('Error guardando comentario');
+			 }, 0);
+		  });
+	}
+	$scope.cancelarDescripcionEditada = function (fotoId, comentarioID) {
+	   $scope.fotoConComentarios[fotoId].comentarios[comentarioID].descripcionEditada = ""
+	}
+ 
+ 
+	$scope.eliminarComentario = function (id) {
+	   $http.delete('./api/public/comments/' + id)
+		  .then(function (response) {
+			 console.log(response)
+			 $timeout(function () {
+				initFotos();
+			 }, 0);
+		  })
+		  .catch(function (response) {
+			 console.log(response)
+			 $timeout(function () {
+				alert('Error eliminando comentario');
+			 }, 0);
+		  });
+		  
+	}
+ 
+	$scope.eliminarFoto = function (index) {
+	   $scope.fotoConComentarios[index].id
+	   $http.delete('./api/public/photos/' + $scope.fotoConComentarios[index].id)
+		  .then(function (response) {
+			 console.log(response)
+			 $timeout(function () {
+				initFotos();
+			 }, 0);
+		  })
+		  .catch(function (response) {
+			 console.log(response)
+			 $timeout(function () {
+				alert('Error eliminando comentario');
+			 }, 0);
+		  });
+	}
+	initFotos();
+   
+       
+   })
 
 .run(function($rootScope, $auth, $state) {
     $rootScope.rs_logout = function() {
@@ -356,6 +543,15 @@ initUsuarios();
 			url: '/login',
 			templateUrl: './vistas/login.html',
 			controller: 'loginCtrl',
+		/*	resolve: {
+				necesitaLogin: saltarSiLogueado
+			},
+		
+		*/	})
+		.state('userWall', {
+			url: '/userWall',
+			templateUrl: './vistas/userWall.html',
+			controller: 'usersWallCtrl',
 		/*	resolve: {
 				necesitaLogin: saltarSiLogueado
 			},

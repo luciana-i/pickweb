@@ -2,18 +2,18 @@
       <div class="card card-register mx-auto mt-5">
         <div class="card-header">Registrar cuenta</div>
         <div class="card-body"> 
-          <form form-singin data-ng-submit="register()">
+          <form class="form-singin" name="formuRegistro" data-ng-submit="register()">
             <div class="form-group">  
               <div class="form-row">
                 <div class="col-md-6">
                   <div class="form-label-group">
-                    <input type="text" id="firstName" class="form-control" data-ng-model="nuevoUsuario.name" placeholder="Nombre" required="required" autofocus="autofocus">
+                    <input type="text" id="firstName" class="form-control" data-ng-model="nuevoUsuario.name"  name ="nuevoUsuario.name" placeholder="Nombre" required="required" autofocus="autofocus">
                     <label for="firstName">Nombre</label>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-label-group">
-                    <input type="text" id="lastName" class="form-control" data-ng-model="nuevoUsuario.lastName" placeholder="Apellido" required="required">
+                    <input type="text" id="lastName" class="form-control" data-ng-model="nuevoUsuario.lastName" name="nuevoUsuario.lastName" placeholder="Apellido" required="required">
                     <label for="lastName">Apellido</label>
                   </div>
                 </div>
@@ -21,7 +21,7 @@
             </div>
             <div class="form-group">
               <div class="form-label-group">
-                <input type="email" id="inputEmail" class="form-control" data-ng-model="nuevoUsuario.mail" placeholder="Mail" required="required">
+                <input type="email" id="inputEmail" class="form-control" data-ng-model="nuevoUsuario.mail" name="nuevoUsuario.mail"  placeholder="Mail" required="required">
                 <label for="inputEmail">Mail</label>
               </div>
             </div>
@@ -29,19 +29,19 @@
               <div class="form-row">
                 <div class="col-md-6">
                   <div class="form-label-group">
-                    <input type="password" id="inputPassword" class="form-control" data-ng-model="nuevoUsuario.password" placeholder="Contraseña" required="required">
+                    <input type="password" id="inputPassword" class="form-control" data-ng-model="nuevoUsuario.password"  name="nuevoUsuario.password" placeholder="Contraseña" required="required">
                     <label for="inputPassword">Contraseña</label>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-label-group">
-                    <input type="password" id="confirmPassword" class="form-control" placeholder="Repita contraseña" required="required">
+                    <input type="password" id="confirmPassword" class="form-control" data-ng-model="nuevoUsuario.passwordComf" name="nuevoUsuario.passwordComf" data-ng-pattern="nuevoUsuario.password" placeholder="Repita contraseña" required="required" equal={{nuevoUsuaro.password}}>
                     <label for="confirmPassword">Repita contraseña</label>
                   </div>
                 </div>
               </div>
             </div>
-            <button class="btn btn-primary btn-block" type="submit">Registrarse</button>
+            <button class="btn btn-primary btn-block" type="submit" ng-disabled="!(formuRegistro.$valid && nuevoUsuario.passwordComf == nuevoUsuario.password )">Registrarse</button>
           </form>
           <div class="text-center">
             <a class="d-block small mt-3" href="#!/login">Login</a>

@@ -23,6 +23,8 @@ $router->post('/user', ['uses' => 'UsersController@createUser']);
 $router->patch('/user/{id}', ['uses' => 'UsersController@updateUser']);
 $router->delete('/user/{id}', ['uses' => 'UsersController@deleteUser']);
 $router->post('/userPhoto/{id}', ['uses' => 'UsersController@postPhoto']);
+$router->get('userByPhoto/{id}', ['uses' => 'UsersController@getUserFromPhoto', function($id=null){return $id;}]);
+
 
 
 $router->get('/photos', ['uses' => 'PhotosController@getPhotos']);
@@ -41,6 +43,5 @@ $router->get('/commentsByPhoto/{id}', ['uses' => 'CommentsController@getComments
 
 
 $router->post('/auth/login', 'AuthController@postLogin');
-
-
-$router->patch('/prueba', ['uses' => 'UsersController@prueba']);
+$router->post('/loggedUser', 'AuthController@me');
+$router->post('/logout', 'AuthController@logout');

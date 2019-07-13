@@ -46,7 +46,7 @@ class User extends Model implements JWTSubject, AuthenticatableContract, Authori
 
     public function getJWTCustomClaims()
     {
-        return [];
+        return [ 'usrRole'=>$this->rol];
     }
 
     

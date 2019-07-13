@@ -1,0 +1,9 @@
+Logout
+vista userWall :
+angular + chequear como hacer para pasar parametros en url (angularUI) + solo tener permisos en los comentarios propios
+chequear funcionalidades, fijarse que editar usuario crea uno :s 
+poner nombre de carpetas correcto
+chequear que las rutas api esten bien, ahora que se modificaron algunas carpetas
+AngularUI con permisos en las rutas
+tema hosting
+si queda tiempo ver los post recientes

@@ -1,5 +1,5 @@
 var app = angular.module('picktimeApp', []);
-app.controller('usersCtrl', function($scope, $http, $window) {    
+app.controller('findFriendsCtrl', function($scope, $http, $window) {    
         $http.get("../api/public/user").then(function (response) {
             var array= response.data;
             array.forEach(element => {

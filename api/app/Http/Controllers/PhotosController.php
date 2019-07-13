@@ -41,7 +41,7 @@ class PhotosController extends Controller
 
         $userId = DB::table('users')->find($id);
         if ($userId) {
-            $query = DB::select("SELECT p.id, p.photo, p.date, u.name FROM `photos` p  INNER JOIN users u ON p.user_id=u.id WHERE user_id= ? ORDER BY `date` DESC", [$id]);
+            $query = DB::select("SELECT p.id, p.photo, p.date, u.name, u.id as usr_id FROM `photos` p  INNER JOIN users u ON p.user_id=u.id WHERE user_id= ? ORDER BY `date` DESC", [$id]);
             return response()->json([$query], 200);
         }
     }

@@ -1,4 +1,4 @@
-angular.module('picktimeApp',[]).controller('usersCtrl', function($scope, $http, $timeout) {
+angular.module('picktimeApp',[]).controller('profileCtrl', function($scope, $http, $timeout) {
     $scope.esVisible=false;
     function initUsuario(){ ///////////COMPLETAR CON EL ID DE USUARIO
         $http.get("../api/public/userById/"+ 4).then(function (response) {

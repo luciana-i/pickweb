@@ -6,6 +6,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use DB;
+use PHPUnit\Framework\Exception;
 
 class UsersController extends Controller
 {
@@ -161,12 +162,21 @@ class UsersController extends Controller
     echo json_encode($arr);
 
     $query =  DB::update('update users set photo = ? where id = ?', [$pathBD.$filename, $id]);
-    $echo($query);  
+ 
       
     if ($query) {
       return response()->json("patch OK", 200);
     } else {
       return response()->json("patch no OK", 500);
+    }
+  }
+
+  function getUserFromPhoto($idUser){
+    try{
+      $query = DB::select("SELECT id FROM photos WHERE user_id = ?", [$idUser]);
+      return response()->json([$query], 200);
+    }catch(\Illuminate\Database\QueryException $ex){
+      return response()->json("user no encontrado", 500);
     }
   }
 }

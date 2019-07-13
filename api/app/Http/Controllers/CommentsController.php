@@ -43,7 +43,7 @@ class CommentsController extends Controller
       function getCommentsByPhotoId($id){
         $userId = DB::table('photos')->find($id);
         if($userId){
-          $query=DB::select("SELECT c.id, c.description, u.name, c.date, u.photo FROM comments c INNER JOIN users u on c.user_id=u.id WHERE c.photo_id= ? ORDER BY c.date DESC", [$id]);
+          $query=DB::select("SELECT c.id, c.description, u.name, c.date, u.photo, u.id as usr_id FROM comments c INNER JOIN users u on c.user_id=u.id WHERE c.photo_id= ? ORDER BY c.date DESC", [$id]);
           return response()->json([$query],200);
         }
     }

@@ -35,7 +35,7 @@ class AuthController extends Controller
         */
 
         try {
-
+         //   var_dump(($request->only('mail', 'password')));die;
             if (! $token = $this->jwt->attempt($request->only('mail', 'password'))) {
                 return response()->json(['user_not_found'], 404);
             }
@@ -55,5 +55,17 @@ class AuthController extends Controller
         }
 
         return response()->json(compact('token'));
+    }
+
+    public function me()
+    {
+        return response()->json(auth()->user());
+    }
+
+    public function logout()
+    {
+        auth()->logout();
+
+        return response()->json(['message' => 'Successfully logged out']);
     }
 }

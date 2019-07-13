@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="card card-login mx-auto mt-5">
+    <div class="card-header">Login</div>
+    <div class="card-body">
+      <form  class="form-signin" data-ng-submit="login()">
+        <div class="form-group">
+          <div class="form-label-group">
+            <input type="email" id="inputEmail"  data-ng-model="mail" class="form-control" placeholder="Dirección de e-mail" required="required" autofocus="autofocus">
+            <label for="inputEmail"  >Dirección de e-mail</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="form-label-group">
+            <input type="password" id="inputPassword" class="form-control" placeholder="Contraseña"  data-ng-model="password" required="required">
+            <label for="inputPassword">Contraseña</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value="remember-me">
+             Recordar contraseña
+            </label>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-block">Login</button>
+      </form>
+      <p></p>
+      <div class="text-center">
+        <a class="btn btn-outline-secondary btn-block" href="#!/register">Registrar cuenta</a>
+      </div>
+    </div>
+  </div>
+</div>

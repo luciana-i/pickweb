@@ -156,7 +156,7 @@ class UsersController extends Controller
     /* Upload file */
     move_uploaded_file($_FILES['file']['tmp_name'], $location . $filename);
 
-    $pathBD="./../api/storage/resources/";
+    $pathBD="./api/storage/resources/";
 
     $arr = array("name" => $filename);
     echo json_encode($arr);

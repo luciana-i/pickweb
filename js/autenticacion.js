@@ -4,11 +4,7 @@ angular.module('miApp', [ 'ui.router', 'satellizer'])
 	var fotosYComentarios = [];
 	$scope.showStartEvent = false;
 	$scope.showPhotoEvent = false;
- /*
-	$scope.rs_logout() = function(){
-		$state.go('login')
-	}
- */
+
 	var initFotos = function () { 
 	   $http.get("./api/public/photosByUserId/" + $auth.getPayload().sub).then(function (response) {
 		  var array = response.data;
@@ -25,8 +21,9 @@ angular.module('miApp', [ 'ui.router', 'satellizer'])
 			 }
 			 $scope.fotoConComentarios = (fotosYComentarios)
 		  })
+		 
 	   })
- 
+	   
 	}
 	initFotos();
 	$scope.uploadFoto = function () {
@@ -49,11 +46,14 @@ angular.module('miApp', [ 'ui.router', 'satellizer'])
 	   }).then(function successCallback(response) {
 		  console.log(response);
 		  $scope.response = response.data;
+		  initFotos();
 	   }).catch(function (response) {
 		  $timeout(function () {
 			 console.log(response)
+			 initFotos();
 		  }, 0);
 	   });
+
 	}
  
 	$scope.editFoto = function (id) {
@@ -75,11 +75,14 @@ angular.module('miApp', [ 'ui.router', 'satellizer'])
 	   }).then(function successCallback(response) {
 		  console.log(response);
 		  $scope.response = response.data;
+		  initFotos();
 	   }).catch(function (response) {
 		  $timeout(function () {
 			 console.log(response)
+			 initFotos();
 		  }, 0);
 	   });
+	   initFotos();
 	}
  
 	$scope.crearComentario = function (id, index) {
@@ -169,6 +172,7 @@ angular.module('miApp', [ 'ui.router', 'satellizer'])
 	   $http.delete('./api/public/photos/' + $scope.fotoConComentarios[index].id)
 		  .then(function (response) {
 			 console.log(response)
+			initFotos();
 			 $timeout(function () {
 				initFotos();
 			 }, 0);
@@ -178,6 +182,7 @@ angular.module('miApp', [ 'ui.router', 'satellizer'])
 			 $timeout(function () {
 				alert('Error eliminando comentario');
 			 }, 0);
+			 initFotos();
 		  });
 	}
 	initFotos();
@@ -210,19 +215,37 @@ angular.module('miApp', [ 'ui.router', 'satellizer'])
                     },
                 }).then(function successCallback(response) {
                     console.log(response);
-                    $scope.response = response.data;
+					$scope.response = response.data;
+					initUsuario()
                   
                 }) .catch(function (response) {
                     $timeout(function () {
                         console.log(response)
-                    }, 0);
+					}, 0);
+					initUsuario()
                 });
                 initUsuario();            
-    }
+	}
+	
+	$scope.guardarUsuarioEditado = function (usuario) {
+		console.log(usuario)
+		 $http.patch('./api/public/user/' + usuario.id, usuario)
+			 .then(function (response) {
+				 $timeout(function () {
+					 initUsuarios();
+					 $scope.cancelarUsuarioEditado();
+				 }, 0);
+			 })
+			 .catch(function () {
+				 $timeout(function () {
+					 alert('Error guardando usuario editado');
+				 }, 0);
+			 });
+		 }
     initUsuario();
 })
 
-.controller('findFriendsCtrl', function($scope, $http, $window, $timeout, $state) {    
+.controller('findFriendsCtrl', function($scope, $http, $window, $timeout, $state, $auth) {    
 	$http.get("./api/public/user").then(function (response) {
 		var array= response.data;
 		array.forEach(element => {
@@ -236,7 +259,7 @@ angular.module('miApp', [ 'ui.router', 'satellizer'])
 	}
 })
 
-.controller('usersCtrl', function($scope, $http, $timeout) {    
+.controller('usersCtrl', function($scope, $http, $timeout, $auth) {    
 	var initUsuarios = function(){
 	$http.get("./api/public/user").then(function (response) {
 		var array= response.data;
@@ -265,10 +288,10 @@ $scope.editarUsuario= function(usuario){
 			$scope.editedUser=element;
 		}
 	})
-}
+}/*
 $scope.guardarUsuarioEditado = function (usuario) {
    console.log(usuario)
-	$http.patch('./api/public/user/' + usuario.id, usuario)
+	$http.patch('./api/public/user/' + $auth.getPayload().sub, usuario)
 		.then(function (response) {
 			$timeout(function () {
 				initUsuarios();
@@ -281,7 +304,7 @@ $scope.guardarUsuarioEditado = function (usuario) {
 			}, 0);
 		});
 	}
-
+*/
 	$scope.cancelarUsuarioEditado = function () {
 	$scope.nuevoUsuario = {
 		nombre: '',
@@ -303,7 +326,7 @@ initUsuarios();
 	};
 	
 	$scope.register = function () {
-		/*$http.post('./api/public/user', $scope.nuevoUsuario)
+		$http.post('./api/public/user', $scope.nuevoUsuario)
 			.then(function (response) {
 				$timeout(function () {
 					console.log(response.data)
@@ -322,7 +345,7 @@ initUsuarios();
 					alert('Error guardando nuevo usuario');
 				}, 0);
 				});
-*/
+
 	};
 })
 
@@ -357,64 +380,12 @@ initUsuarios();
  
 	}
 	initFotos();
-	$scope.uploadFoto = function () {
-	   var id = 4; /////LLENAR ID CON ID USUARIO
-	   var fd = new FormData();
-	   var files = document.getElementById('file').files[0];
-	   fd.append('file', files);
-	   suboFoto(fd);
-	   initFotos();
-	}
- 
-	function suboFoto(fd) {
-	   $http({
-		  headers: {
-			 'Content-Type': undefined
-		  },
-		  method: 'POST',
-		  url: "./api/public/photos/" + userId,
-		  data: fd,
-	   }).then(function successCallback(response) {
-		  console.log(response);
-		  $scope.response = response.data;
-	   }).catch(function (response) {
-		  $timeout(function () {
-			 console.log(response)
-		  }, 0);
-	   });
-	}
- 
-	$scope.editFoto = function (id) {
-	   var fd = new FormData();
-	   var files = document.getElementById('file' + id).files[0];
-	   fd.append('file', files);
-	   editoFoto(fd, $scope.fotoConComentarios[id].id);
-	   initFotos();
-	}
- 
-	function editoFoto(fd, id) {
-	   $http({
-		  headers: {
-			 'Content-Type': undefined
-		  },
-		  method: 'POST',
-		  url: "./api/public/editPhotos/" + id,
-		  data: fd,
-	   }).then(function successCallback(response) {
-		  console.log(response);
-		  $scope.response = response.data;
-	   }).catch(function (response) {
-		  $timeout(function () {
-			 console.log(response)
-		  }, 0);
-	   });
-	}
- 
+
 	$scope.crearComentario = function (id, index) {
 	   nuevoComentario = {};
 	   nuevoComentario.description = $scope.fotoConComentarios[index].descripcion;
 	   nuevoComentario.photo_id = id;
-	   $http.post('./api/public/comentarioByPhotoid/' + userId, nuevoComentario)
+	   $http.post('./api/public/comentarioByPhotoid/' + $auth.getPayload().sub, nuevoComentario)
 		  .then(function (response) {
 			 $timeout(function () {
 				initFotos();
@@ -441,14 +412,6 @@ initUsuarios();
 	   }
 	}
  
-	$scope.editarFoto = function (index) {
-	   if ($scope.selected == index) {
-		  $scope.selected = null;
-	   } else {
-		  $scope.selected = index;
-	   }
-	}
-
 	$scope.guardarDescripcionEditada = function (fotoID, comentID, id) {
 	   comentario = {}
 	   var date = (new Date()).toISOString().split('T')[0];
@@ -490,23 +453,6 @@ initUsuarios();
 			 }, 0);
 		  });
 		  
-	}
- 
-	$scope.eliminarFoto = function (index) {
-	   $scope.fotoConComentarios[index].id
-	   $http.delete('./api/public/photos/' + $scope.fotoConComentarios[index].id)
-		  .then(function (response) {
-			 console.log(response)
-			 $timeout(function () {
-				initFotos();
-			 }, 0);
-		  })
-		  .catch(function (response) {
-			 console.log(response)
-			 $timeout(function () {
-				alert('Error eliminando comentario');
-			 }, 0);
-		  });
 	}
 	initFotos();
    

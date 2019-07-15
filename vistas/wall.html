@@ -83,7 +83,7 @@
                 </div>
 
                 <!-- Repeat de los posts con sus comentarios -->
-                <div ng-repeat="foto in fotoConComentarios">
+                <div ng-repeat="foto in fotoConComentarios | orderBy: '-date'">
 
                     <!-- Post Content Column -->
 

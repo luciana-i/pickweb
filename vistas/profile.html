@@ -109,7 +109,8 @@
                                         <input type='button' value='Upload' id='upload' ng-click='upload()'>
                                         <p>{{ response.name }}</p>
                                     </div>
-                                
+                            </form>
+                            <form name="formuProfile">
                                 <div class="form-group">
                                 </div>
                                 <br> 
@@ -140,7 +141,7 @@
                                             data-ng-model="usr.passwordConf" >
                                     </div>
                                 <button type="button" class="btn btn-success"
-                                    data-ng-click="guardarUsuarioEditado()" ng-disabled="!(usr.passwordConf == usr.password )">Guardar</button>
+                                    data-ng-click="guardarUsuarioEditado(usr)" ng-disabled="!(usr.passwordConf == usr.password && formuProfile.$valid )">Guardar</button>
                             </form>
                         </div>
                     </div>

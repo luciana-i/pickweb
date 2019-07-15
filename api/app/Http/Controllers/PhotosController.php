@@ -59,7 +59,7 @@ class PhotosController extends Controller
             /* Upload file */
             move_uploaded_file($_FILES['file']['tmp_name'], $location . $filename);
 
-            $pathBD = "./../api/storage/resources/";
+            $pathBD = "./api/storage/resources/";
             $arr = array("name" => $filename);
             echo json_encode($arr);
 
@@ -86,14 +86,15 @@ class PhotosController extends Controller
             /* Upload file */
             move_uploaded_file($_FILES['file']['tmp_name'], $location . $filename);
 
-            $pathBD = "./../api/storage/resources/";
+            $pathBD = "./api/storage/resources/";
 
             $arr = array("name" => $filename);
             echo json_encode($arr);
 
-            $date = date("Y-m-d");
+           // $date = date("Y-m-d");
 
-            $query =  DB::update('update photos set photo = ?, date= ? where id = ?', [$pathBD . $filename, $date, $id]);
+           $query =  DB::update('update photos set photo = ? where id = ?', [$pathBD . $filename, $id]);
+          //  $query =  DB::update('update photos set photo = ?, date= ? where id = ?', [$pathBD . $filename, $date, $id]);
 
 
             if ($query) {

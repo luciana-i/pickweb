@@ -33,6 +33,8 @@ $router->post('/photos/{id}', ['uses' => 'PhotosController@createPhotos']);
 $router->post('/editPhotos/{id}', ['uses' => 'PhotosController@updatePhotos']);
 $router->delete('/photos/{id}', ['uses' => 'PhotosController@deletePhotos']);
 $router->get('/photosByUserId/{id}', ['uses' => 'PhotosController@getPhotosByUserId']);
+$router->get('/photosFromTimeRange', ['uses' => 'PhotosController@getPhotosFromTimeRange']);
+
 
 $router->get('/comments', ['uses' => 'CommentsController@getComments']);
 $router->get('commentsById/{id}', ['uses' => 'CommentsController@getCommentsById', function($id=null){return $id;}]);
@@ -41,6 +43,8 @@ $router->patch('/comments/{id}', ['uses' => 'CommentsController@updateComments']
 $router->delete('/comments/{id}', ['uses' => 'CommentsController@deleteComments']);
 $router->get('/commentsByPhoto/{id}', ['uses' => 'CommentsController@getCommentsByPhotoId', function($id=null){return $id;}]);
 
+$router->get('/applicationBackground', ['uses' => 'ApplicationStyleController@getBackground']);
+$router->patch('/applicationBackgroundUpdate/{id}', ['uses' => 'ApplicationStyleController@updateBackground']);
 
 $router->post('/auth/login', 'AuthController@postLogin');
 $router->post('/loggedUser', 'AuthController@me');

@@ -3,12 +3,11 @@ poner nombre de carpetas correcto
 AngularUI con permisos en las rutas
 tema hosting
 si queda tiempo ngAnimate
-si queda tiempo ver los post recientes
+
 
 
 
 
 funcionalidades 
-a wall agregarle la barra que tienen todas las paginas
 chequear que los botones de editado y eliminar hacen que las fotos parezcan de diferente tamaño
 

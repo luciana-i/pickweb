@@ -24,16 +24,6 @@ class AuthController extends Controller
             'mail'    => 'required|email|max:255',
             'password' => 'required',
         ]);
-
-        /*
-        login: mauro@mauro.com
-        password: mauro
-
-        "login" -> login|hash(password)
-
-        bdd: login | contraseña hasheada
-        */
-
         try {
          //   var_dump(($request->only('mail', 'password')));die;
             if (! $token = $this->jwt->attempt($request->only('mail', 'password'))) {

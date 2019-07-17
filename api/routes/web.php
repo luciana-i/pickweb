@@ -48,4 +48,4 @@ $router->patch('/applicationBackgroundUpdate/{id}', ['uses' => 'ApplicationStyle
 
 $router->post('/auth/login', 'AuthController@postLogin');
 $router->post('/loggedUser', 'AuthController@me');
-$router->post('/logout', 'AuthController@logout');
+$router->post('/auth/logout', 'AuthController@logout');

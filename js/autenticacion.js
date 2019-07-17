@@ -462,25 +462,25 @@ angular.module('miApp', ['ui.router', 'satellizer'])
 
 	.controller('dashboardCtrl', function ($scope, $http, $window, $auth, $timeout, $state) {
 		$scope.fotos = {}
-		$scope.persona= []
+		$scope.persona = []
 
 		$http.get("./api/public/photosFromTimeRange/").then(function (response) {
 			var array = response.data;
 			array.forEach(element => {
 				$scope.fotos = (element);
-				
+
 			})
-			$scope.goToWall= function(id){
-				var userID=undefined;
-				$window.localStorage.setItem(userID,id)
+			$scope.goToWall = function (id) {
+				var userID = undefined;
+				$window.localStorage.setItem(userID, id)
 				$state.go('userWall')
 			}
 		})
 		$http.get("./api/public/userById/" + $auth.getPayload().sub).then(function (response) {
 			$scope.persona = response.data[0];
-			})
+		})
 	})
-	
+
 	.run(function ($rootScope, $auth, $state) {
 		$rootScope.rs_logout = function () {
 			if (confirm("Desea salir del sistema?")) {
@@ -502,86 +502,72 @@ angular.module('miApp', ['ui.router', 'satellizer'])
 				url: '/dashboard',
 				templateUrl: 'vistas/dashboard.html',
 				controller: 'dashboardCtrl',
-				/*	resolve: {
-						necesitaLogin: saltarSiLogueado
-					},
-				*/
+				resolve: {
+						necesitaLogin: loginRequerido
+				},
 			})
 			.state('login', {
 				url: '/login',
 				templateUrl: './vistas/login.html',
 				controller: 'loginCtrl',
-				/*	resolve: {
-						necesitaLogin: saltarSiLogueado
-					},
-				
-				*/
+				resolve: {
+					necesitaLogin: saltarSiLogueado
+				},
 			})
 			.state('userWall', {
 				url: '/userWall',
 				templateUrl: './vistas/userWall.html',
 				controller: 'usersWallCtrl',
-				/*	resolve: {
-						necesitaLogin: saltarSiLogueado
-					},
-				
-				*/
+				resolve: {
+					necesitaLogin: loginRequerido
+				},
 			})
 			.state('register', {
 				url: '/register',
 				templateUrl: './vistas/register.html',
 				controller: 'registerCtrl',
-				/*	resolve: {
-						necesitaLogin: saltarSiLogueado
-					},
-				
-				*/
+				resolve: {
+					necesitaLogin: saltarSiLogueado
+				},
 			})
 			.state('muro', {
 				url: '/wall',
 				templateUrl: './vistas/wall.html',
 				controller: 'wallCtrl',
-				/*	resolve: {
-						necesitaLogin: loginRequerido
-					},
-					
-				*/
+				resolve: {
+					necesitaLogin: loginRequerido
+				},
+
+
 			})
 			.state('perfil', {
 				url: '/profile',
 				templateUrl: './vistas/profile.html',
 				controller: 'profileCtrl',
-				/*	resolve: {
-						necesitaLogin: loginRequerido
-					},
-					
-				*/
+				resolve: {
+					necesitaLogin: loginRequerido
+				},
 			})
 			.state('findfriends', {
 				url: '/findfriends',
 				templateUrl: './vistas/findfriends.html',
 				controller: 'findFriendsCtrl',
-				/*	resolve: {
-						necesitaLogin: loginRequerido
-					},
-					
-				*/
+				resolve: {
+					necesitaLogin: loginRequerido
+				},
 			})
 			.state('users', {
 				url: '/users',
 				templateUrl: './vistas/users.html',
 				controller: 'usersCtrl',
-				/*	resolve: {
-						necesitaLogin: loginRequerido
-					},
-					
-				*/
+				resolve: {
+					necesitaLogin: saltarSiNoAdmin
+				},
 			})
 			.state('404', {
 				url: '/404',
 				templateUrl: 'vistas/404.html',
 			})
-
 
 		$urlRouterProvider.otherwise("/404");
 
@@ -595,33 +581,21 @@ angular.module('miApp', ['ui.router', 'satellizer'])
 			return deferred.promise;
 		};
 
-		function loginRequerido($q, $auth, $location) {
+		function loginRequerido($q, $auth, $location, $state) {
 			var deferred = $q.defer();
 			if ($auth.isAuthenticated()) {
 				deferred.resolve();
 			} else {
-				$location.path('/login');
+				$state('login');
 			}
 			return deferred.promise;
 		}
 
-		function saltarSiNoAdmin($q, $auth, $location) {
+		function saltarSiNoAdmin($q, $auth) {
 			var deferred = $q.defer();
-			if ($auth.getPayload().rol = 'admin') {
+			if ($auth.getPayload().rol != 'admin') {
 				deferred.resolve();
-			} else {
-				console.log('no es usuario admin, permiso denegado');
 			}
 			return deferred.promise;
 		}
-	})
-
-;
-/*
-			
-			
-			
-			
-	
-
-*/
+	});

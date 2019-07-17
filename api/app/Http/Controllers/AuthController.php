@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\JWTAuth;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class AuthController extends Controller
 {
@@ -13,9 +14,12 @@ class AuthController extends Controller
      */
     protected $jwt;
 
+    
+
     public function __construct(JWTAuth $jwt)
     {
         $this->jwt = $jwt;
+     //   $this->middleware('guest', ['except' => ['logout', 'getLogout']]);
     }
 
     public function postLogin(Request $request)
@@ -52,9 +56,11 @@ class AuthController extends Controller
         return response()->json(auth()->user());
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
-        auth()->logout();
+$content=$request->input();
+var_dump($content['token']);
+        $this->jwt->invalidate($content['token']);
 
         return response()->json(['message' => 'Successfully logged out']);
     }

@@ -1,13 +1,7 @@
-Logout // ver si con el permiso de rutas redirige a login
 poner nombre de carpetas correcto
-AngularUI con permisos en las rutas
 tema hosting
-si queda tiempo ngAnimate
-
-
-
-
 
 funcionalidades 
 chequear que los botones de editado y eliminar hacen que las fotos parezcan de diferente tamaño
+chequear que a pepe se le hizo el muro chico porque no tiene fotos
 

@@ -50,10 +50,10 @@ class CommentsController extends Controller
     function createCommentsByPhotoId(Request $request, $id){
       if ($request->isJson()) {
         $data = $request->json()->all();
-       // var_dump($data);die;
+       // var_dump($id);die;
         $descripcion=$data['description'];
         $photo_id=$data['photo_id'];
-        $fecha=date("Y-m-d");
+        $fecha=date("Y-m-d H:i:s");
         $id+0;
         $query =  DB::insert('insert into comments (photo_id, description, date,user_id)  values (?,?,?,?)', [$photo_id, $descripcion,$fecha, $id]);
        
@@ -81,8 +81,11 @@ class CommentsController extends Controller
     function updateComments(Request $request,$id)
     {
             try {
-                $comment = Comments::find($id);
+           //q   var_dump($comment = Comments::find($id));die;
+              
+               $comment = Comments::find($id);
                 if ($comment) {
+            //      var_dump($request->input('date'));die;
                     $comment->description = $request->input('description');
                     $comment->date = $request->input('date');
                     $comment->save();

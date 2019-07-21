@@ -93,6 +93,7 @@ angular.module('miApp', ['ui.router', 'satellizer'])
 				.then(function (response) {
 					$timeout(function () {
 						initFotos();
+						nuevoComentario.descripcion=""
 					}, 0);
 				})
 				.catch(function (response) {
@@ -127,13 +128,14 @@ angular.module('miApp', ['ui.router', 'satellizer'])
 		$scope.guardarDescripcionEditada = function (fotoID, comentID, id) {
 			comentario = {}
 			var date = (new Date()).toISOString().split('T')[0];
-			console.log(date)
+			console.log(id)
 			comentario.description = $scope.fotoConComentarios[fotoID].comentarios[comentID].descripcionEditada;
 			comentario.date = date;
 			console.log(comentario)
 			$http.patch('./api/public/comments/' + id, comentario)
 				.then(function (response) {
 					console.log(response)
+					//scope.selected = null;
 					$timeout(function () {
 						initFotos();
 					}, 0);
@@ -143,7 +145,9 @@ angular.module('miApp', ['ui.router', 'satellizer'])
 					$timeout(function () {
 						alert('Error guardando comentario');
 					}, 0);
+					
 				});
+				scope.selected = null;
 		}
 		$scope.cancelarDescripcionEditada = function (fotoId, comentarioID) {
 			$scope.fotoConComentarios[fotoId].comentarios[comentarioID].descripcionEditada = ""
@@ -188,7 +192,7 @@ angular.module('miApp', ['ui.router', 'satellizer'])
 		initFotos();
 	})
 
-	.controller('profileCtrl', function ($scope, $http, $timeout, $auth) {
+	.controller('profileCtrl', function ($scope, $http, $timeout, $auth, $window) {
 		$scope.esVisible = false;
 
 		function initUsuario() {
@@ -233,8 +237,14 @@ angular.module('miApp', ['ui.router', 'satellizer'])
 			$http.patch('./api/public/user/' + usuario.id, usuario)
 				.then(function (response) {
 					$timeout(function () {
-						initUsuarios();
-						$scope.cancelarUsuarioEditado();
+						initUsuario();
+						$scope.usr.name="";
+						$scope.usr.lastName="";
+						$scope.usr.mail="";
+						$scope.usr.password="";
+						$scope.usr.passwordConf="";
+			$window.location.reload(); ///NO ENTIENDO QUE ESTA PASANDO	
+						console.log(response)
 					}, 0);
 				})
 				.catch(function () {
@@ -291,7 +301,7 @@ angular.module('miApp', ['ui.router', 'satellizer'])
 			})
 		}
 		$scope.guardarUsuarioEditado = function (usuario) {
-			console.log(usuario)
+		//	console.log(usuario)
 			$http.patch('./api/public/user/' + $auth.getPayload().sub, usuario)
 				.then(function (response) {
 					$timeout(function () {

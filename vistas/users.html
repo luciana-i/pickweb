@@ -23,7 +23,7 @@
         <!-- Navbar -->
         <ul class="navbar-nav ml-auto ml-md-0">
             <li class="nav-item dropdown no-arrow">
-                <a href="#" role="button" data-ng-click="rs_logout()"  > Logout <i class="fas fa-user-circle fa-fw"></i> </a>
+                <a href="#!/login" role="button" data-ng-click="rs_logout()"  style="color: white"  > Logout <i class="fas fa-user-circle fa-fw"></i> </a>
             </li>
         </ul>
     
@@ -103,7 +103,7 @@
                                         <input type="email" class="form-control" placeholder="email" data-ng-model="editedUser.mail">
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" class="form-control" placeholder="rol" data-ng-model="editedUser.rol">
+                                        <input type="text" class="form-control" placeholder="rol" data-ng-model="editedUser.rol">
                                     </div>
                                     <button type="button" class="btn btn-success" data-ng-click="guardarUsuarioEditado(editedUser)"><i class="far fa-save"></i></button>
                                     <button type="button" class="btn btn-danger" data-ng-click="cancelarUsuarioEditado()"><i class="fas fa-ban"></i></button>

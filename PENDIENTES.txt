@@ -5,3 +5,7 @@ funcionalidades
 chequear que los botones de editado y eliminar hacen que las fotos parezcan de diferente tamaño
 chequear que a pepe se le hizo el muro chico porque no tiene fotos
 
+mismo color fondo y elementos en wall
+que al registrarse se redirija al login
+s
+

@@ -37,8 +37,8 @@ class PhotosController extends Controller
     function getPhotosFromTimeRange(Request $request)
     {
         try{
-            $todayDate = date("Y-m-d");
-            $oldDate = date('Y-m-d', strtotime('-2 week'));
+            $todayDate = date("Y-m-d H:i:s");
+            $oldDate = date('Y-m-d H:i:s', strtotime('-2 week'));
             $query = DB::select("SELECT p.id, p.photo, p.date, u.name, u.id as usr_id FROM photos p INNER JOIN users u ON p.user_id=u.id WHERE p.date BETWEEN ? AND ?", [$oldDate, $todayDate]);
             return response()->json([$query], 200);
         }catch (\Illuminate\Database\QueryException $ex) {
@@ -73,7 +73,7 @@ class PhotosController extends Controller
             $arr = array("name" => $filename);
             echo json_encode($arr);
 
-            $date = date("Y-m-d");
+            $date = date("Y-m-d H:i:s");
 
             $query =  DB::insert('insert into photos (photo, user_id, date)  values (?,?,?)', [$pathBD . $filename, $id, $date]);
             if ($query)

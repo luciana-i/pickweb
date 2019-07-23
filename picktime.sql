@@ -13,8 +13,9 @@ START TRANSACTION;
 SET time_zone = "+00:00";
 
 -- create user
-GRANT ALL PRIVILEGES ON *.* TO 'luciana'@'localhost' IDENTIFIED BY 'NewPassword!123';
+-- GRANT ALL PRIVILEGES ON *.* TO 'luciana'@'localhost' IDENTIFIED BY 'NewPassword!123';
 
+GRANT ALL PRIVILEGES ON *.* TO 'newUserr'@'localhost' IDENTIFIED BY 'NewPassword!123';
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;

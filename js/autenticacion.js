@@ -93,7 +93,7 @@ angular.module('miApp', ['ui.router', 'satellizer'])
 				.then(function (response) {
 					$timeout(function () {
 						initFotos();
-						nuevoComentario.descripcion=""
+						nuevoComentario.descripcion = ""
 					}, 0);
 				})
 				.catch(function (response) {
@@ -145,9 +145,9 @@ angular.module('miApp', ['ui.router', 'satellizer'])
 					$timeout(function () {
 						alert('Error guardando comentario');
 					}, 0);
-					
+
 				});
-				scope.selected = null;
+			scope.selected = null;
 		}
 		$scope.cancelarDescripcionEditada = function (fotoId, comentarioID) {
 			$scope.fotoConComentarios[fotoId].comentarios[comentarioID].descripcionEditada = ""
@@ -238,12 +238,12 @@ angular.module('miApp', ['ui.router', 'satellizer'])
 				.then(function (response) {
 					$timeout(function () {
 						initUsuario();
-						$scope.usr.name="";
-						$scope.usr.lastName="";
-						$scope.usr.mail="";
-						$scope.usr.password="";
-						$scope.usr.passwordConf="";
-			$window.location.reload(); ///NO ENTIENDO QUE ESTA PASANDO	
+						$scope.usr.name = "";
+						$scope.usr.lastName = "";
+						$scope.usr.mail = "";
+						$scope.usr.password = "";
+						$scope.usr.passwordConf = "";
+						$window.location.reload(); ///NO ENTIENDO QUE ESTA PASANDO	
 						console.log(response)
 					}, 0);
 				})
@@ -301,7 +301,7 @@ angular.module('miApp', ['ui.router', 'satellizer'])
 			})
 		}
 		$scope.guardarUsuarioEditado = function (usuario) {
-		//	console.log(usuario)
+			//	console.log(usuario)
 			$http.patch('./api/public/user/' + $auth.getPayload().sub, usuario)
 				.then(function (response) {
 					$timeout(function () {
@@ -345,7 +345,8 @@ angular.module('miApp', ['ui.router', 'satellizer'])
 						$scope.nuevoUsuario.apellido = '';
 						$scope.nuevoUsuario.mail = '';
 						$scope.nuevoUsuario.password = '';
-						alert("Usuario creado, por favor inicia sesion");
+						//alert("Usuario creado, por favor inicia sesion");
+						$state.go('login')
 					}, 0);
 				})
 				.catch(function (response) {
@@ -508,12 +509,20 @@ angular.module('miApp', ['ui.router', 'satellizer'])
 		$authProvider.loginUrl = 'api/public/auth/login';
 
 		$stateProvider
+			.state('/', {
+				url: '/',
+				templateUrl: './vistas/login.html',
+				controller: 'loginCtrl',
+				resolve: {
+					necesitaLogin: saltarSiLogueado
+				},
+			})
 			.state('dashboard', {
 				url: '/dashboard',
 				templateUrl: 'vistas/dashboard.html',
 				controller: 'dashboardCtrl',
 				resolve: {
-						necesitaLogin: loginRequerido
+					necesitaLogin: loginRequerido
 				},
 			})
 			.state('login', {

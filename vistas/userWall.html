@@ -15,7 +15,8 @@
     <!-- Navbar -->
     <ul class="navbar-nav ml-auto ml-md-0">
         <li class="nav-item dropdown no-arrow">
-            <a href="#!/login" role="button" data-ng-click="rs_logout()" style="color: white"  > Logout <i class="fas fa-user-circle fa-fw"></i> </a>
+            <a href="#!/login" role="button" data-ng-click="rs_logout()" style="color: white"> Logout <i
+                    class="fas fa-user-circle fa-fw"></i> </a>
         </li>
     </ul>
 
@@ -55,10 +56,10 @@
 
     <div class="content-wrapper">
         <br>
-            <div class="card-header">
-                    <i class="far fa-image"></i> Muro</div>
-                <div class="card-body" >
-       
+        <div class="card-header">
+            <i class="far fa-image"></i> Muro</div>
+        <div class="card-body">
+
             <!-- Repeat de los posts con sus comentarios -->
             <div ng-repeat="foto in fotoConComentarios">
 
@@ -96,8 +97,7 @@
                         <div class="card-body">
                             <form>
                                 <div class="form-group">
-                                    <textarea class="form-control" rows="3"
-                                        data-ng-model="foto.descripcion"></textarea>
+                                    <textarea class="form-control" rows="3" data-ng-model="foto.descripcion"></textarea>
                                 </div>
                                 <button type="button" class="btn btn-primary"
                                     data-ng-click="crearComentario(foto.id,$index)">Insertar
@@ -117,11 +117,11 @@
                             {{comentario.description}}
                             <span ng-if="id == comentario.usr_id">
                                 <button type="button" class="btn btn-outline-info btn-sm"
-                                    data-ng-click="eliminarComentario(comentario.id)"  ><i
+                                    data-ng-click="eliminarComentario(comentario.id)"><i
                                         class="far fa-trash-alt"></i></i></button>
                                 <button type="button" class="btn btn-outline-info btn-sm"
                                     ng-click="editarUsuario($index)"><i class="far fa-edit"></i></button>
-                                <div class="form-group"  ng-show="selectedIndex == $index">
+                                <div class="form-group" ng-show="selectedIndex == $index">
                                     <textarea class="form-control" rows="3"
                                         ng-model="comentario.descripcionEditada"></textarea>
                                     <button type="button" class="btn btn-success"
@@ -140,3 +140,4 @@
             </div>
         </div>
     </div>
+</div>

@@ -12,6 +12,8 @@ SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
+create database picktime;
+use picktime;
 -- create user
 -- GRANT ALL PRIVILEGES ON *.* TO 'luciana'@'localhost' IDENTIFIED BY 'NewPassword!123';
 

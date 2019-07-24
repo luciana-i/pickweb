@@ -43,7 +43,7 @@ CREATE TABLE `comments` (
   `description` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
   `photo_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `date` datetime NOT NULL
+  `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -51,7 +51,7 @@ CREATE TABLE `comments` (
 --
 
 INSERT INTO `comments` (`id`, `description`, `photo_id`, `user_id`, `date`) VALUES
-(9, 'el eclipse estuvo genial!', 8, 6, '2019-07-20 00:00:00');
+(9, 'el eclipse estuvo genial!', 8, 6, '2019-07-20');
 
 -- --------------------------------------------------------
 

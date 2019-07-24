@@ -124,33 +124,7 @@ angular.module('miApp', ['ui.router', 'satellizer'])
 			}
 		}
 
-		$scope.guardarDescripcionEditada = function (fotoID, comentID, id) {
-			comentario = {}
-			var date = (new Date()).toISOString().split('T')[0];
-			console.log(id)
-			comentario.description = $scope.fotoConComentarios[fotoID].comentarios[comentID].descripcionEditada;
-			comentario.date = date;
-			console.log(comentario)
-			$http.patch('./api/public/comments/' + id, comentario)
-				.then(function (response) {
-					console.log(response)
-					
-					$timeout(function () {
-						initFotos();
-					}, 0);
-				})
-				.catch(function (response) {
-					console.log(response)
-					$timeout(function () {
-						alert('Error guardando comentario');
-					}, 0);
 
-				});
-			scope.selected = null;
-		}
-		$scope.cancelarDescripcionEditada = function (fotoId, comentarioID) {
-			$scope.fotoConComentarios[fotoId].comentarios[comentarioID].descripcionEditada = ""
-		}
 
 
 		$scope.eliminarComentario = function (id) {
@@ -188,6 +162,34 @@ angular.module('miApp', ['ui.router', 'satellizer'])
 					initFotos();
 				});
 		}
+		$scope.guardarDescripcionEditada = function (fotoID, comentID, id) {
+			comentario = {}
+			var date = (new Date()).toISOString().split('T')[0];
+			console.log(id)
+			comentario.description = $scope.fotoConComentarios[fotoID].comentarios[comentID].descripcionEditada;
+			comentario.date = date;
+			console.log(comentario)
+			$http.patch('./api/public/comments/' + id, comentario)
+				.then(function (response) {
+					console.log(response);
+					console.log(response);
+					$timeout(function () {
+						initFotos();
+					}, 0);
+				})
+				.catch(function (response) {
+					console.log(response)
+					$timeout(function () {
+						alert('Error guardando comentario');
+					}, 0);
+
+				});
+			$scope.selected = null;
+		}
+		$scope.cancelarDescripcionEditada = function (fotoId, comentarioID) {
+			$scope.fotoConComentarios[fotoId].comentarios[comentarioID].descripcionEditada = ""
+		}
+
 		initFotos();
 	})
 

@@ -75,7 +75,7 @@
                 </div>
 
                 <!-- Repeat de los posts con sus comentarios -->
-                <div ng-repeat="foto in fotoConComentarios | orderBy: '-date'">
+                <div ng-repeat="foto in fotoConComentarios | orderBy: '-$index'">
 
                     <!-- Post Content Column -->
 
@@ -89,7 +89,7 @@
                                 </div>
 
                                 <div class="col-lg-6 text-right">
-                                    <span>{{foto.date}}</span>
+                                    <span>{{foto.date | date:'yyyy-MM-dd'}}</span>
                                 </div>
                             </div>
 
@@ -144,7 +144,7 @@
                         </div>
 
                         <!-- Single Comment -->
-                        <div class="media mb-4" ng-repeat="comentario in foto.comentarios | orderBy: '-date': true">
+                        <div class="media mb-4" ng-repeat="comentario in foto.comentarios | orderBy: '-$index'">
                             <img class="d-flex mr-3 rounded-circle" height="42" width="42" src="{{comentario.photo}}"
                                 alt="">
                             <div class="media-body">

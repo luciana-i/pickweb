@@ -61,7 +61,7 @@
         <div class="card-body">
 
             <!-- Repeat de los posts con sus comentarios -->
-            <div ng-repeat="foto in fotoConComentarios">
+            <div ng-repeat="foto in fotoConComentarios | orderBy: '-$index'">
 
                 <!-- Post Content Column -->
 

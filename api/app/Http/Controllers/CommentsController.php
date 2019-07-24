@@ -50,7 +50,8 @@ class CommentsController extends Controller
     function createCommentsByPhotoId(Request $request, $id){
       if ($request->isJson()) {
         $data = $request->json()->all();
-       // var_dump($id);die;
+      //  var_dump($data);die;
+
         $descripcion=$data['description'];
         $photo_id=$data['photo_id'];
         $fecha=date("Y-m-d H:i:s");

@@ -27,7 +27,7 @@ angular.module('miApp', ['ui.router', 'satellizer'])
 		}
 		initFotos();
 		$scope.uploadFoto = function () {
-			var id = 4; /////LLENAR ID CON ID USUARIO
+			var id = 4; 
 			var fd = new FormData();
 			var files = document.getElementById('file').files[0];
 			fd.append('file', files);
@@ -109,7 +109,6 @@ angular.module('miApp', ['ui.router', 'satellizer'])
 		}
 
 		$scope.editarUsuario = function (index) {
-
 			if ($scope.selectedIndex == index) {
 				$scope.selectedIndex = null;
 			} else {
@@ -135,7 +134,7 @@ angular.module('miApp', ['ui.router', 'satellizer'])
 			$http.patch('./api/public/comments/' + id, comentario)
 				.then(function (response) {
 					console.log(response)
-					//scope.selected = null;
+					
 					$timeout(function () {
 						initFotos();
 					}, 0);
@@ -243,7 +242,7 @@ angular.module('miApp', ['ui.router', 'satellizer'])
 						$scope.usr.mail = "";
 						$scope.usr.password = "";
 						$scope.usr.passwordConf = "";
-						$window.location.reload(); ///NO ENTIENDO QUE ESTA PASANDO	
+						$window.location.reload(); 	
 						console.log(response)
 					}, 0);
 				})
@@ -301,8 +300,7 @@ angular.module('miApp', ['ui.router', 'satellizer'])
 			})
 		}
 		$scope.guardarUsuarioEditado = function (usuario) {
-			//	console.log(usuario)
-			$http.patch('./api/public/user/' + $auth.getPayload().sub, usuario)
+			$http.patch('./api/public/user/' + usuario.id, usuario)
 				.then(function (response) {
 					$timeout(function () {
 						initUsuarios();
@@ -345,7 +343,7 @@ angular.module('miApp', ['ui.router', 'satellizer'])
 						$scope.nuevoUsuario.apellido = '';
 						$scope.nuevoUsuario.mail = '';
 						$scope.nuevoUsuario.password = '';
-						//alert("Usuario creado, por favor inicia sesion");
+					
 						$state.go('login')
 					}, 0);
 				})
@@ -353,7 +351,7 @@ angular.module('miApp', ['ui.router', 'satellizer'])
 					console.log(response.data)
 					$timeout(function () {
 
-						//$scope.cancelarUsuarioNuevo();
+					
 						alert('Error guardando nuevo usuario');
 					}, 0);
 				});
@@ -395,6 +393,7 @@ angular.module('miApp', ['ui.router', 'satellizer'])
 
 		$scope.crearComentario = function (id, index) {
 			nuevoComentario = {};
+			debugger
 			nuevoComentario.description = $scope.fotoConComentarios[index].descripcion;
 			nuevoComentario.photo_id = id;
 			$http.post('./api/public/comentarioByPhotoid/' + $auth.getPayload().sub, nuevoComentario)
